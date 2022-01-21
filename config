@@ -1,0 +1,22 @@
+
+ngx_addon_name=ngx_http_qoi_module
+
+NGX_QOI_SRCS="$ngx_addon_dir/src/ngx_http_qoi_module.c"
+NGX_QOI_DEPS="$ngx_addon_dir/src/qoi.h \
+              $ngx_addon_dir/src/stb_image.h \
+              $ngx_addon_dir/src/stb_image_write.h \
+             "
+
+if [ $ngx_module_link = DYNAMIC ] ; then
+  ngx_module_name="ngx_http_qoi_module"
+  ngx_module_srcs="$NGX_QOI_SRCS"
+  ngx_module_deps="$NGX_QOI_DEPS"
+
+  . auto/module
+else
+  HTTP_MODULES="$HTTP_MODULES ngx_http_qoi_module"
+  NGX_ADDON_SRCS="$NGX_ADDON_SRCS $NGX_QOI_SRCS"
+  NGX_ADDON_DEPS="$NGX_ADDON_DEPS $NGX_QOI_DEPS"
+fi
+
+have=NGX_HTTP_HEADERS . auto/have
